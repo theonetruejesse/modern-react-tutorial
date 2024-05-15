@@ -7,8 +7,8 @@ interface AuthContext {
 
 // Define the userAuth wrapper function with types
 export const userAuth =
-  <T>(fn: (context: AuthContext) => Promise<T>) =>
-  async (): Promise<T> => {
+  <T, A extends any[]>(fn: (context: AuthContext, ...args: A) => Promise<T>) =>
+  async (...args: A): Promise<T> => {
     const user = auth();
 
     if (!user.userId) throw new Error("Unauthorized");
@@ -16,6 +16,6 @@ export const userAuth =
     // Create the context with userId
     const context: AuthContext = { userId: user.userId };
 
-    // Call the wrapped function with the context
-    return await fn(context);
+    // Call the wrapped function with the context and additional arguments
+    return await fn(context, ...args);
   };
