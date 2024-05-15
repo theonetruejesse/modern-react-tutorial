@@ -1,5 +1,11 @@
 import { getMyImage } from "~/server/queries";
 import { Modal } from "./modal";
+import {
+  DialogHeader,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "~/components/ui/dialog";
 
 export default async function ImgModal({
   params: { id: imgId },
@@ -12,8 +18,19 @@ export default async function ImgModal({
   const image = await getMyImage(numImgId);
 
   return (
+    // <Modal>
+    //   <img src={image.url} className="w-48" />
+    // </Modal>
     <Modal>
-      <img src={image.url} className="w-48" />
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
     </Modal>
   );
 }

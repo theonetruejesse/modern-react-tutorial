@@ -1,6 +1,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { Dialog, DialogTrigger } from "~/components/ui/dialog";
 import { getMyImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
@@ -10,12 +11,19 @@ const Images = async () => {
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {images.map((image) => (
-        <div key={image.id} className="w-48">
-          <Link href={`/img/${image.id}`}>
-            <Image src={image.url} alt={image.name} width={200} height={200} />
-            {image.name}
-          </Link>
-        </div>
+        <Link href={`/img/${image.id}`}>
+          <div key={image.id} className="w-48">
+            <DialogTrigger>
+              <Image
+                src={image.url}
+                alt={image.name}
+                width={200}
+                height={200}
+              />
+              {image.name}
+            </DialogTrigger>
+          </div>
+        </Link>
       ))}
     </div>
   );
