@@ -8,6 +8,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Dialog } from "~/components/ui/dialog";
+import { ModalContext } from "~/components/ui/modal";
 
 export const metadata = {
   title: "Modern React",
@@ -28,10 +29,10 @@ export default function RootLayout({
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <body className="dark">
           <TopNav />
-          <Dialog>
+          <ModalContext>
             {children}
             {modal}
-          </Dialog>
+          </ModalContext>
           <div id="modal-root" />
         </body>
       </html>

@@ -6,6 +6,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "~/components/ui/dialog";
+import { RouteChangeComplete } from "~/components/routeChangeComplete";
 
 export default async function ImgModal({
   params: { id: imgId },
@@ -18,19 +19,17 @@ export default async function ImgModal({
   const image = await getMyImage(numImgId);
 
   return (
-    // <Modal>
-    //   <img src={image.url} className="w-48" />
-    // </Modal>
-    <Modal>
+    // <img src={image.url} className="w-48" />
+    <RouteChangeComplete targetUrl={`/img/${imgId}`}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>{image.name}</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
-    </Modal>
+    </RouteChangeComplete>
   );
 }
