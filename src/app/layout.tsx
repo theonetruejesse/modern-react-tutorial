@@ -9,6 +9,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { ModalContext } from "~/components/ui/modal";
 import { Toaster } from "~/components/ui/sonner";
+import { CSPostHogProvider } from "./_analytics/provider";
 
 export const metadata = {
   title: "Modern React",
@@ -25,18 +26,20 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable} flex flex-col gap-5`}>
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <body className="dark">
-          <TopNav />
-          <ModalContext>
-            {children}
-            {modal}
-            <div id="modal-root" />
-          </ModalContext>
-          <Toaster />
-        </body>
-      </html>
+      <CSPostHogProvider>
+        <html lang="en" className={`${GeistSans.variable} flex flex-col gap-5`}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <body className="dark">
+            <TopNav />
+            <ModalContext>
+              {children}
+              {modal}
+              <div id="modal-root" />
+            </ModalContext>
+            <Toaster />
+          </body>
+        </html>
+      </CSPostHogProvider>
     </ClerkProvider>
   );
 }

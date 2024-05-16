@@ -4,6 +4,7 @@ import { useUploadThing } from "~/utils/uploadthing";
 import { UploadSVG } from "../icons";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { usePostHog } from "posthog-js/react";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -36,9 +37,11 @@ const useUploadThingInputProps = (...args: Input) => {
 // style the label element to change appearance
 export const UploadButton = () => {
   const router = useRouter();
+  const posthog = usePostHog();
 
   const { inputProps } = useUploadThingInputProps("imageUpload", {
     onClientUploadComplete: (res) => {
+      posthog.capture("upload begin");
       res.forEach((file) => {
         toast.dismiss(file.name);
       });
