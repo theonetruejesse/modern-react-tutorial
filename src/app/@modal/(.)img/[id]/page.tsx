@@ -19,14 +19,13 @@ export default async function ImgModal({
   const image = await getMyImage(numImgId);
 
   return (
-    // <img src={image.url} className="w-48" />
     <RouteChangeComplete targetUrl={`/img/${imgId}`}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{image.name}</DialogTitle>
+          <img src={image.url} className="w-48" />
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Created at: {image.createdAt.toString()}
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
