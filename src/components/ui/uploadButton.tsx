@@ -3,6 +3,7 @@
 import { useUploadThing } from "~/utils/uploadthing";
 import { UploadSVG } from "../icons";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -35,8 +36,33 @@ const useUploadThingInputProps = (...args: Input) => {
 // style the label element to change appearance
 export const UploadButton = () => {
   const router = useRouter();
+
   const { inputProps } = useUploadThingInputProps("imageUpload", {
-    onClientUploadComplete: () => router.refresh(),
+    onClientUploadComplete: (res) => {
+      res.forEach((file) => {
+        toast.dismiss(file.name);
+      });
+
+      toast.success("Upload complete", {
+        duration: 2000, // 2 seconds
+        id: "upload-complete",
+      });
+      router.refresh();
+    },
+    // id collision possible given same filenames
+    onUploadBegin: (filename) => {
+      toast.loading(`Uploading ${filename}...`, {
+        duration: 8000, // 8 seconds
+        id: filename,
+      });
+    },
+
+    onUploadError: (error) => {
+      toast.error(`Upload failed: ${error.message}`, {
+        duration: 4000, // 4 seconds
+        id: "upload-error",
+      });
+    },
   });
 
   return (

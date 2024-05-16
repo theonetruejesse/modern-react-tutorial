@@ -7,8 +7,8 @@ import { TopNav } from "./_components/topnav";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
-import { Dialog } from "~/components/ui/dialog";
 import { ModalContext } from "~/components/ui/modal";
+import { Toaster } from "~/components/ui/sonner";
 
 export const metadata = {
   title: "Modern React",
@@ -32,8 +32,9 @@ export default function RootLayout({
           <ModalContext>
             {children}
             {modal}
+            <div id="modal-root" />
           </ModalContext>
-          <div id="modal-root" />
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
