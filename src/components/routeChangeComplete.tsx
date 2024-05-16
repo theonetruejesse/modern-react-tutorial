@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
+// when changing routes, this wrapper component will render the children only after the route change is complete
 export const RouteChangeComplete = ({
   targetUrl,
   children,
