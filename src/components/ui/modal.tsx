@@ -24,14 +24,14 @@ export const OpenModal = ({
   const router = useRouter();
 
   return (
-    <button
+    <div
       onClick={() => {
         router.push(`${url}`);
         setOpen();
       }}
     >
       {children}
-    </button>
+    </div>
   );
 };
 
@@ -40,13 +40,13 @@ export const CloseModal = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   return (
-    <button
+    <div
       onClick={() => {
         router.push("/");
         setClose();
       }}
     >
       {children}
-    </button>
+    </div>
   );
 };
